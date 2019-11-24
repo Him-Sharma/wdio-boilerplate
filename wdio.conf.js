@@ -114,15 +114,13 @@ exports.config = {
     ['image-comparison', 
     // The options
     {
-        // Some options, see the docs for more
         baselineFolder: join(process.cwd(), './baseline/web/'),
         formatImageName: '{tag}-{logName}-{width}x{height}',
-        screenshotPath: join(process.cwd(), '.result/'),
+        screenshotPath: join(process.cwd(), './result/'),
         savePerInstance: true,
         autoSaveBaseline: true,
         blockOutStatusBar: true,
         blockOutToolBar: true,
-        // ... more options
         }]],
     
     // Framework you want to run your specs with.
