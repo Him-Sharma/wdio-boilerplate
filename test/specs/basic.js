@@ -1,6 +1,4 @@
 const assert = require('assert');
-const TimelineReporter = require('wdio-timeline-reporter').default;
-
 
 describe('Thoughtworks homepage', () => {
     it('should match baseline', () => {
