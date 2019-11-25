@@ -115,8 +115,10 @@ exports.config = {
     // The options
     {
         baselineFolder: join(process.cwd(), './baseline/web/'),
-        formatImageName: '{tag}-{logName}-{width}x{height}',
         screenshotPath: join(process.cwd(), './result/'),
+        clearRuntimeFolder: true,
+        formatImageName: '{tag}-{logName}-{width}x{height}',
+        disableCSSAnimation: true,
         savePerInstance: true,
         autoSaveBaseline: true,
         blockOutStatusBar: true,
@@ -178,6 +180,7 @@ exports.config = {
      */
     before: function() {
         const chai = require('chai');
+        global.assert=chai.assert;
         global.expect = chai.expect;
         chai.Should();
     }

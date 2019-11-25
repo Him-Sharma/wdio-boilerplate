@@ -1,9 +1,23 @@
-const assert = require('assert');
-
 describe('Thoughtworks homepage', () => {
-    it('should match baseline', () => {
+    it('should match baseline by hiding elements', () => {        
         browser.url('https://www.thoughtworks.com');
-        var title = browser.getTitle();
-        browser.checkScreen('ThoughtworksHomePage').should.be.equal(0);
-        });
+        var videoBanner = $('.new-video-banner');
+        assert.equal(browser.checkScreen('Hide-ThoughtworksHomePage', {
+            hideElements: [videoBanner]
+        }), 0);
+    });
+    it('should match baseline by removing elements', () => {
+        browser.url('https://www.thoughtworks.com');
+        var videoBanner = $('.new-video-banner');
+        assert.equal(browser.checkScreen('Remove-ThoughtworksHomePage', {
+            removeElements: [videoBanner]
+        }), 0);
+    });   
+    it('should match fullscreen baseline', () => {
+        browser.url('https://www.thoughtworks.com');
+        var videoBanner = $('.new-video-banner');
+        assert.equal(browser.checkFullPageScreen('Full-ThoughtworksHomePage', {
+            hideElements: [videoBanner]
+        }), 0);
+    });
 });
