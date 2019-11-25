@@ -13,11 +13,4 @@ describe('Thoughtworks homepage', () => {
             removeElements: [videoBanner]
         }), 0);
     });   
-    it('should match fullscreen baseline', () => {
-        browser.url('https://www.thoughtworks.com');
-        var videoBanner = $('.new-video-banner');
-        assert.equal(browser.checkFullPageScreen('Full-ThoughtworksHomePage', {
-            hideElements: [videoBanner]
-        }), 0);
-    });
 });

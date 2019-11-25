@@ -1,5 +1,13 @@
-const { join } = require('path');
-const { TimelineService } = require('wdio-timeline-reporter/timeline-service');
+const {
+    join
+} = require('path');
+const {
+    TimelineService
+} = require('wdio-timeline-reporter/timeline-service');
+const TIMELINE_REPORT_DIR = './report';
+const {
+    removeSync
+} = require('fs-extra');
 
 exports.config = {
     //
@@ -94,7 +102,7 @@ exports.config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'http://localhost',
+    baseUrl: 'https://demo.applitools.com/',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -110,21 +118,23 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['chromedriver',[TimelineService],
-    ['image-comparison', 
-    // The options
-    {
-        baselineFolder: join(process.cwd(), './baseline/web/'),
-        screenshotPath: join(process.cwd(), './result/'),
-        clearRuntimeFolder: true,
-        formatImageName: '{tag}-{logName}-{width}x{height}',
-        disableCSSAnimation: true,
-        savePerInstance: true,
-        autoSaveBaseline: true,
-        blockOutStatusBar: true,
-        blockOutToolBar: true,
-        }]],
-    
+    services: ['chromedriver', [TimelineService],
+        ['image-comparison',
+            // The options
+            {
+                baselineFolder: join(process.cwd(), './baseline/web/'),
+                screenshotPath: join(process.cwd(), './result/'),
+                clearRuntimeFolder: true,
+                formatImageName: '{tag}-{logName}-{width}x{height}',
+                disableCSSAnimation: true,
+                savePerInstance: true,
+                autoSaveBaseline: true,
+                blockOutStatusBar: true,
+                blockOutToolBar: true,
+            }
+        ]
+    ],
+
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
     // see also: https://webdriver.io/docs/frameworks.html
@@ -139,14 +149,17 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter.html
-    reporters: ['spec',['timeline', { outputDir: './report' }]],
- 
+    reporters: ['spec', ['timeline', {
+        outputDir: TIMELINE_REPORT_DIR
+    }]],
+
     //
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
     mochaOpts: {
         ui: 'bdd',
-        timeout: 60000
+        timeout: 60000,
+        require: ['@babel/register']
     },
     //
     // =====
@@ -161,8 +174,9 @@ exports.config = {
      * @param {Object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-    // onPrepare: function (config, capabilities) {
-    // },
+    onPrepare: function (config, capabilities) {
+        removeSync(TIMELINE_REPORT_DIR);
+    },
     /**
      * Gets executed just before initialising the webdriver session and test framework. It allows you
      * to manipulate configurations depending on the capability or spec.
@@ -170,17 +184,19 @@ exports.config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {Array.<String>} specs List of spec file paths that are to be run
      */
-    // beforeSession: function (config, capabilities, specs) {
-    // },
+    beforeSession: function (config, capabilities, specs) {
+
+    },
     /**
      * Gets executed before test execution begins. At this point you can access to all global
      * variables like `browser`. It is the perfect place to define custom commands.
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {Array.<String>} specs List of spec file paths that are to be run
      */
-    before: function() {
+    before: function () {
+
         const chai = require('chai');
-        global.assert=chai.assert;
+        global.assert = chai.assert;
         global.expect = chai.expect;
         chai.Should();
     }
@@ -264,10 +280,10 @@ exports.config = {
     // onComplete: function(exitCode, config, capabilities, results) {
     // },
     /**
-    * Gets executed when a refresh happens.
-    * @param {String} oldSessionId session ID of the old session
-    * @param {String} newSessionId session ID of the new session
-    */
+     * Gets executed when a refresh happens.
+     * @param {String} oldSessionId session ID of the old session
+     * @param {String} newSessionId session ID of the new session
+     */
     //onReload: function(oldSessionId, newSessionId) {
     //}
 }
