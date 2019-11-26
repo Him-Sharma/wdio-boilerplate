@@ -16,12 +16,18 @@ class LoginPage extends Page {
     get loginHeader() {
         return $('.auth-header');
     }
+    get errorMessage(){
+        return $('.alert-warning');
+    }
 
     open() {
         super.open();
         return this;
     }
 
+    getErrorMessage(){
+        return this.errorMessage.getText();
+    }
     loginAs(username, password) {
         this.username.setValue(username);
         this.password.setValue(password);
