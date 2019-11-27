@@ -1,13 +1,24 @@
-const {
-    join
-} = require('path');
-const {
-    TimelineService
-} = require('wdio-timeline-reporter/timeline-service');
+const { join } = require('path');
+const { TimelineService } = require('wdio-timeline-reporter/timeline-service');
 const TIMELINE_REPORT_DIR = './report';
-const {
-    removeSync
-} = require('fs-extra');
+const { removeSync } = require('fs-extra');
+var path = require('path');
+var VisualRegressionCompare = require('wdio-visual-regression-service/compare');
+
+
+function getScreenshotName(basePath) {
+    return function(context) {
+      var type = context.type;
+      var testName = context.test.title;
+      var browserVersion = parseInt(context.browser.version, 10);
+      var browserName = context.browser.name;
+      var browserViewport = context.meta.viewport;
+      var browserWidth = browserViewport.width;
+      var browserHeight = browserViewport.height;
+  
+      return path.join(basePath, `${testName}_${type}_${browserName}_v${browserVersion}_${browserWidth}x${browserHeight}.png`);
+    };
+  }
 
 exports.config = {
     //
@@ -41,30 +52,11 @@ exports.config = {
     // ============
     // Capabilities
     // ============
-    // Define your capabilities here. WebdriverIO can run multiple capabilities at the same
-    // time. Depending on the number of capabilities, WebdriverIO launches several test
-    // sessions. Within your capabilities you can overwrite the spec and exclude options in
-    // order to group specific specs to a specific capability.
-    //
-    // First, you can define how many instances should be started at the same time. Let's
-    // say you have 3 different capabilities (Chrome, Firefox, and Safari) and you have
-    // set maxInstances to 1; wdio will spawn 3 processes. Therefore, if you have 10 spec
-    // files and you set maxInstances to 10, all spec files will get tested at the same time
-    // and 30 processes will get spawned. The property handles how many capabilities
-    // from the same test should run tests.
-    //
+
     maxInstances: 10,
-    //
-    // If you have trouble getting all important capabilities together, check out the
-    // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://docs.saucelabs.com/reference/platforms-configurator
-    //
     capabilities: [{
-        // maxInstances can get overwritten per capability. So if you have an in-house Selenium
-        // grid with only 5 firefox instances available you can make sure that not more than
-        // 5 instances get started at a time.
         maxInstances: 5,
-        //
         browserName: 'chrome',
         // If outputDir is provided WebdriverIO can capture driver session logs
         // it is possible to configure which logTypes to include/exclude.
@@ -76,32 +68,9 @@ exports.config = {
     // Test Configurations
     // ===================
     // Define all options that are relevant for the WebdriverIO instance here
-    //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
     logLevel: 'info',
-    //
-    // Set specific log levels per logger
-    // loggers:
-    // - webdriver, webdriverio
-    // - @wdio/applitools-service, @wdio/browserstack-service, @wdio/devtools-service, @wdio/sauce-service
-    // - @wdio/mocha-framework, @wdio/jasmine-framework
-    // - @wdio/local-runner, @wdio/lambda-runner
-    // - @wdio/sumologic-reporter
-    // - @wdio/cli, @wdio/config, @wdio/sync, @wdio/utils
-    // Level of logging verbosity: trace | debug | info | warn | error | silent
-    // logLevels: {
-    //     webdriver: 'info',
-    //     '@wdio/applitools-service': 'info'
-    // },
-    //
-    // If you only want to run your tests until a specific amount of tests have failed use
-    // bail (default is 0 - don't bail, run all tests).
     bail: 0,
-    //
-    // Set a base URL in order to shorten url command calls. If your `url` parameter starts
-    // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
-    // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
-    // gets prepended directly.
     baseUrl: 'https://demo.applitools.com/',
     //
     // Default timeout for all waitFor* commands.
@@ -115,23 +84,29 @@ exports.config = {
     connectionRetryCount: 3,
     //
     // Test runner services
-    // Services take over a specific job you don't want to take care of. They enhance
-    // your test setup with almost no effort. Unlike plugins, they don't add new
-    // commands. Instead, they hook themselves up into the test process.
     services: ['chromedriver', [TimelineService],
-        ['image-comparison',
+        ['visual-regression',
             // The options
             {
-                baselineFolder: join(process.cwd(), './baseline/web/'),
-                screenshotPath: join(process.cwd(), './result/'),
-                clearRuntimeFolder: true,
-                formatImageName: '{tag}-{logName}-{width}x{height}',
-                disableCSSAnimation: true,
-                savePerInstance: true,
-                autoSaveBaseline: true,
-                blockOutStatusBar: true,
-                blockOutToolBar: true,
-            }
+                compare: new VisualRegressionCompare.Spectre({
+                    url: 'http://localhost:3000',
+                    project: 'Visual regression spike',
+                    suite: 'my test suite',
+                    test: function getTest(context) {
+                      return context.test.title;
+                    },
+                    browser: function getBrowser(context) {
+                      return context.browser.name;
+                    },
+                    size: function getSize(context) {
+                      return context.meta.viewport != null ? context.meta.viewport.width : context.meta.orientation;
+                    },
+                    fuzzLevel: 30
+                  }),
+                  viewportChangePause: 300,
+                  viewports: [{ width: 320, height: 480 }, { width: 480, height: 320 }, { width: 1024, height: 768 }],
+                  orientations: ['landscape', 'portrait'],
+              }
         ]
     ],
 
@@ -287,3 +262,4 @@ exports.config = {
     //onReload: function(oldSessionId, newSessionId) {
     //}
 }
+
