@@ -12,12 +12,4 @@ describe('Hackthon user', () => {
         expect(LoginPage.getErrorMessage()).to.equal('Username must be present');
         assert.equal(browser.checkScreen('applitools/FailedLoginPage', {}), 0);
     });
-    it('should see an error if tries to login without username and password', () => {
-        LoginPage.open().loginAs('', '');
-        expect(LoginPage.getErrorMessage()).to.equal('Both Username and Password must be present');
-    });
-    it('should see an error if tries to login without password', () => {
-        LoginPage.open().loginAs('test', '');
-        expect(LoginPage.getErrorMessage()).to.equal('Password must be present');
-    });
 });
