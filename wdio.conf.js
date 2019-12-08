@@ -176,6 +176,7 @@ exports.config = {
      */
     onPrepare: function (config, capabilities) {
         removeSync(TIMELINE_REPORT_DIR);
+        
     },
     /**
      * Gets executed just before initialising the webdriver session and test framework. It allows you

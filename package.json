@@ -23,7 +23,7 @@
     "chai": "^4.2.0",
     "chromedriver": "^78.0.1",
     "wdio-chromedriver-service": "^5.0.2",
-    "wdio-image-comparison-service": "^1.8.0",
-    "wdio-timeline-reporter": "^5.1.1"
+    "wdio-timeline-reporter": "^5.1.1",
+    "nodeclient-spectre": "1.0.5"
   }
 }
