@@ -5,9 +5,7 @@ const {
     TimelineService
 } = require('wdio-timeline-reporter/timeline-service');
 const TIMELINE_REPORT_DIR = './report';
-const {
-    removeSync
-} = require('fs-extra');
+const { removeSync } = require('fs-extra');
 
 exports.config = {
     //
@@ -31,7 +29,7 @@ exports.config = {
     // directory is where your package.json resides, so `wdio` will be called from there.
     //
     specs: [
-        './test/specs/applitools/*.js'
+        './test/specs/**/*.js'
     ],
     // Patterns to exclude.
     exclude: [
@@ -118,7 +116,7 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['chromedriver', [TimelineService],
+    services: ['chromedriver', [TimelineService],['devtools'],
         ['image-comparison',
             // The options
             {
