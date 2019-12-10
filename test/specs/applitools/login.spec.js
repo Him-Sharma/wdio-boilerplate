@@ -10,6 +10,6 @@ describe('Hackthon user', () => {
         assert.equal(browser.checkScreen('applitools/LoginPage', {}), 0);
         LoginPage.loginAs('', 'test');
         expect(LoginPage.getErrorMessage()).to.equal('Username must be present');
-        assert.equal(browser.checkScreen('applitools/FailedLoginPage', {}), 0);
+        assert.equal(browser.checkScreen('applitools/LoginFailedPage', {}), 0);
     });
 });

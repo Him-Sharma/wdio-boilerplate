@@ -25,5 +25,5 @@
     "wdio-chromedriver-service": "^5.0.2",
     "wdio-image-comparison-service": "^1.8.0",
     "wdio-timeline-reporter": "^5.1.1"
-  }
+    }
 }
