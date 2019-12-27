@@ -1,10 +1,7 @@
 const {
     join
 } = require('path');
-const {
-    TimelineService
-} = require('wdio-timeline-reporter/timeline-service');
-const TIMELINE_REPORT_DIR = './report';
+const REPORT_DIR = './report';
 const {
     removeSync
 } = require('fs-extra');
@@ -39,7 +36,7 @@ exports.config = {
     waitforTimeout: 5000,
     connectionRetryTimeout: 9000,
     connectionRetryCount: 3,
-    services: ['chromedriver', [TimelineService],
+    services: ['chromedriver',
         ['devtools'],
         ['image-comparison',
             // The options
@@ -57,10 +54,8 @@ exports.config = {
         ]
     ],
     framework: 'mocha',
-    reporters: ['spec', ['timeline', {
-        outputDir: TIMELINE_REPORT_DIR,
-        embedImages: true,
-        screenshotStrategy: 'before:click'
+    reporters: ['spec', ['allure', {
+        outputDir: REPORT_DIR
     }]],
 
     mochaOpts: {
@@ -73,7 +68,7 @@ exports.config = {
     // Hooks
     // =====
     onPrepare: function (config, capabilities) {
-        removeSync(TIMELINE_REPORT_DIR);
+        removeSync(REPORT_DIR);
     },
     beforeSession: function (config, capabilities, specs) {},
     before: function () {
@@ -81,5 +76,6 @@ exports.config = {
         global.assert = chai.assert;
         global.expect = chai.expect;
         chai.Should();
+        browser.maximizeWindow();
     }
 }
