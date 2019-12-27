@@ -1,4 +1,4 @@
-import LoginPage from '../../../page/login.page';
+import HomePage from '../../../page/home.page';
 
 describe('Performance metrics should be below benchmark', () => {
     beforeEach(() => {
@@ -6,8 +6,8 @@ describe('Performance metrics should be below benchmark', () => {
             networkThrottling: 'online'
         });
     });
-    it('for login page', () => {
-        LoginPage.open();
+    it('for home page', () => {
+        HomePage.open();
         expect(browser.getPerformanceScore()).to.be.below(0.99);
     });
     afterEach(() => {
