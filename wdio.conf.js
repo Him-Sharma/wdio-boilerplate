@@ -21,6 +21,17 @@ exports.config = {
     specs: [
         './test/specs/**/*.js'
     ],
+    suites: {
+        functional: [
+            './test/specs/functional/*.js'
+        ],
+        performance: [
+            './test/specs/performance/*.js'
+        ],
+        visual: [
+            './test/specs/visual-regression/*.js'
+        ]
+    },
     //
     // ============
     // Capabilities
@@ -30,8 +41,7 @@ exports.config = {
         maxInstances: 5,
         browserName: 'chrome',
     }],
-    logLevel: 'info',
-    bail: 0,
+    logLevel: 'silent',
     baseUrl: 'http://automationpractice.com/',
     waitforTimeout: 5000,
     connectionRetryTimeout: 9000,

@@ -1,16 +1,11 @@
-import Page from './page';
+import HeaderPage from './header.page';
 import SearchResultsPage from './searchResults.page';
 
 const SELECTORS = {
     SEARCH_INPUT: '#search_query_top',
     SEARCH_BUTTON: '#searchbox > button'
-}
-class HomePage extends Page {
-
-    open(){
-        super.open();
-        return this;
-    }
+};
+class HomePage extends HeaderPage {
     get searchInput() {
         return $(SELECTORS.SEARCH_INPUT);
     }
