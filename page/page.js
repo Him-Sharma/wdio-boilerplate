@@ -1,9 +1,8 @@
 export default class Page {
-  constructor() {
-    this.open();
-  }
-
-  static open() {
-    browser.url('');
-  }
+    constructor(){
+        this.open();
+    }
+    open() {
+        browser.url('');
+    }
 }

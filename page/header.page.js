@@ -1,12 +1,15 @@
 import Page from './page';
 
 const SELECTORS = {
-  CONTACT_US_LINK: '#contact-link',
+    CONTACT_US_LINK: '#contact-link'
 };
 class HeaderPage extends Page {
-  static get contactUsLink() {
-    return $(SELECTORS.CONTACT_US_LINK);
-  }
+    constructor(){
+        super();
+    }
+    get contactUsLink() {
+        return $(SELECTORS.CONTACT_US_LINK);
+    }
 }
 
 export default HeaderPage;
