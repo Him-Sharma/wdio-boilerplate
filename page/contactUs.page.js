@@ -37,7 +37,10 @@ class ContactUsPage extends HeaderPage {
         super.contactUsLink.click();
         return this;
     }
-
+    open(){
+        super.open();
+        return this;
+    }
     sendMessage(subjectHeading, emailAddress, orderReference, message) {
         this.subjectHeadingDropdown.selectByVisibleText(subjectHeading);
         this.emailInput.setValue(emailAddress);

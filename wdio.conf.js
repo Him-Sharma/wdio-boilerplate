@@ -1,10 +1,8 @@
-const {
-    join
-} = require('path');
+const { join } = require('path');
 const REPORT_DIR = './report';
-const {
-    removeSync
-} = require('fs-extra');
+const { removeSync } = require('fs-extra');
+const chai = require('chai');
+var allure = require('allure-commandline');
 
 exports.config = {
     //
@@ -41,7 +39,7 @@ exports.config = {
         maxInstances: 5,
         browserName: 'chrome',
     }],
-    logLevel: 'silent',
+    logLevel: 'info',
     baseUrl: 'http://automationpractice.com/',
     waitforTimeout: 5000,
     connectionRetryTimeout: 9000,
@@ -77,12 +75,11 @@ exports.config = {
     // =====
     // Hooks
     // =====
-    onPrepare: function (config, capabilities) {
+    onPrepare: function () {
         removeSync(REPORT_DIR);
     },
-    beforeSession: function (config, capabilities, specs) {},
+    beforeSession: function () {},
     before: function () {
-        const chai = require('chai');
         global.assert = chai.assert;
         global.expect = chai.expect;
         chai.Should();

@@ -12,7 +12,10 @@ class HomePage extends HeaderPage {
     get searchButton(){
         return $(SELECTORS.SEARCH_BUTTON);
     }
-
+    open(){
+        super.open();
+        return this;
+    }
     searchFor(searchText) {
         this.searchInput.setValue(searchText);
         this.searchButton.click();
