@@ -1,8 +1,8 @@
-const { join } = require('path');
+const {join} = require('path');
 const REPORT_DIR = './report';
-const { removeSync } = require('fs-extra');
+const {removeSync} = require('fs-extra');
 const chai = require('chai');
-var allure = require('allure-commandline');
+const {TimelineService} = require('wdio-timeline-reporter/timeline-service');
 
 exports.config = {
     //
@@ -46,12 +46,14 @@ exports.config = {
     connectionRetryCount: 3,
     services: ['chromedriver',
         ['devtools'],
+        [TimelineService],
         ['image-comparison',
             // The options
             {
                 baselineFolder: join(process.cwd(), './baseline/web/'),
                 screenshotPath: join(process.cwd(), './result/'),
                 clearRuntimeFolder: true,
+                returnAllCompareData: true,
                 formatImageName: '{tag}-{logName}-{width}x{height}',
                 disableCSSAnimation: true,
                 savePerInstance: true,
@@ -62,8 +64,10 @@ exports.config = {
         ]
     ],
     framework: 'mocha',
-    reporters: ['spec', ['allure', {
-        outputDir: REPORT_DIR
+    reporters: ['spec', ['timeline', {
+        outputDir: REPORT_DIR,
+        embedImages: true,
+        screenshotStrategy: 'before:click'
     }]],
 
     mochaOpts: {
@@ -84,5 +88,6 @@ exports.config = {
         global.expect = chai.expect;
         chai.Should();
         browser.maximizeWindow();
+        require('./common/customCommands');
     }
 }
