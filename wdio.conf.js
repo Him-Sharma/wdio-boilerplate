@@ -88,6 +88,6 @@ exports.config = {
         global.expect = chai.expect;
         chai.Should();
         browser.maximizeWindow();
-        require('./common/customCommands');
+        require('./src/common/customCommands');
     }
 }

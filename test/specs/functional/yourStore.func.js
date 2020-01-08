@@ -1,7 +1,6 @@
-import HomePage from '../../../page/home.page';
-import SearchResultsPage from '../../../page/searchResults.page';
-import HeaderPage from '../../../page/header.page';
-import ContactUsPage from '../../../page/contactUs.page';
+import HomePage from '../../../src/page/home.page';
+import SearchResultsPage from '../../../src/page/searchResults.page';
+import ContactUsPage from '../../../src/page/contactUs.page';
 
 describe('Customer', () => {
     it('should be able to search for items', () => {
