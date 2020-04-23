@@ -13,7 +13,7 @@ describe('Customer', () => {
             .sendMessage('Customer service', 'abc@abc.com', '1231', 'Order is not delivered');
         expect(ContactUsPage.successMessage()).to.be.equal('Your message has been successfully sent to our team.');
     });
-    it.only('should be able to subscribe to newsletter', () => {
+    it('should be able to subscribe to newsletter', () => {
         HomePage.open().subscribeToNewsletter(faker.internet.email());
         expect(HomePage.newsLetterSubscriptionAlert()).to.have.string('Newsletter : You have successfully subscribed to this newsletter.');
     });
