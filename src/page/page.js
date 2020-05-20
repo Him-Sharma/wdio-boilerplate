@@ -1,5 +1,5 @@
 export default class Page {
-    open() {
-        browser.url('');
-    }
+  open () {
+    browser.url('');
+  }
 }
