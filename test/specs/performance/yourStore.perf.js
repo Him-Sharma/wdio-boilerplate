@@ -6,9 +6,9 @@ describe('Performance metrics should be below benchmark', () => {
       networkThrottling: 'online'
     });
   });
-  it('for home page', () => {
+  it.skip('for home page', () => {
     HomePage.open();
-    expect(browser.getPerformanceScore()).to.be.below(0.99);
+    expect(browser.browser.getMetrics().speedIndex).to.be.below(0.99);
   });
   afterEach(() => {
     browser.disablePerformanceAudits();
