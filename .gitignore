@@ -1,5 +1,4 @@
-.DS_Store
+**/.DS_Store
 .idea
 test-output
 node_modules/
-baseline/web/desktop_chrome/.DS_Store

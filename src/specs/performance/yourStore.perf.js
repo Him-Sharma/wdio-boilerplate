@@ -1,4 +1,4 @@
-import HomePage from '../../../src/page/home.page';
+import HomePage from '../../page/home.page';
 
 describe('Performance metrics should be below benchmark', () => {
   beforeEach(() => {

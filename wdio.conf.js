@@ -12,26 +12,27 @@ exports.config = {
   // ====================
 
   runner: 'local',
-  path: '/',
+  path: '/wd/hub',
+  port: 4444,
   outputDir: TEST_OUTPUT_DIR,
   //
   // ==================
   // Specify Test Files
   // ==================
-  specs: ['./test/specs/**/*.js'],
+  specs: ['./src/specs/**/*.js'],
   suites: {
-    functional: ['./test/specs/functional/*.js'],
-    performance: ['./test/specs/performance/*.js'],
-    visual: ['./test/specs/visual-regression/*.js']
+    functional: ['./src/specs/functional/*.js'],
+    performance: ['./src/specs/performance/*.js'],
+    visual: ['./src/specs/visual-regression/*.js']
   },
   //
   // ============
   // Capabilities
   // ============
-  maxInstances: 10,
+  maxInstances: 1,
   capabilities: [
     {
-      maxInstances: 5,
+      maxInstances: 1,
       browserName: 'chrome',
       'goog:chromeOptions': {
         args: ['window-size=1366,1024']
@@ -44,8 +45,6 @@ exports.config = {
   connectionRetryTimeout: 9000,
   connectionRetryCount: 3,
   services: [
-    'chromedriver',
-    ['devtools'],
     [TimelineService],
     [
       'image-comparison',
@@ -63,6 +62,7 @@ exports.config = {
       }
     ]
   ],
+  chromeDriverLogs: TEST_OUTPUT_DIR,
   framework: 'mocha',
   reporters: [
     'spec',

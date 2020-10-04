@@ -1,5 +1,5 @@
-import HomePage from '../../../src/page/home.page';
-import SearchResultsPage from '../../../src/page/searchResults.page';
+import HomePage from '../../page/home.page';
+import SearchResultsPage from '../../page/searchResults.page';
 
 describe('Visual regression', () => {
   it('should pass for home page', () => {
