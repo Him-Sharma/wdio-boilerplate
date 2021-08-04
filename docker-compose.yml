@@ -1,10 +1,13 @@
 app:
   build: .
-  command: npm test -- --hostname selenium
+  command: sh -c "npm install && npm test -- --hostname chrome"
   links:
-    - selenium
+    - chrome
+  volumes:
+    - .:/usr/test
+  working_dir: /usr/test
 
-selenium:
+chrome:
   image: selenium/standalone-chrome
   expose:
     - '4444'

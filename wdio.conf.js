@@ -1,5 +1,5 @@
 const { join } = require('path');
-const TEST_OUTPUT_DIR = './test-output';
+const TEST_OUTPUT_DIR = `${process.cwd()}/test-output`;
 const REPORT_DIR = `${TEST_OUTPUT_DIR}/report`;
 const { removeSync } = require('fs-extra');
 
@@ -91,9 +91,7 @@ exports.config = {
   beforeSession: function () {},
   before: function () {
     const chai = require('chai');
-    global.assert = chai.assert;
     global.expect = chai.expect;
-    chai.Should();
     require('./src/framework/customCommands');
   }
 };
