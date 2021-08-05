@@ -1,8 +1,8 @@
 To build:
-``npm install``
+``yarn install``
 
 To run test:
-``npm test``
+``yarn test``
 
 Expectations from visual regression suite
 
