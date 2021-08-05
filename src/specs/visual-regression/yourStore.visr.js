@@ -4,11 +4,11 @@ import SearchResultsPage from '../../page/searchResults.page';
 describe('Visual regression', () => {
   it('should pass for home page', () => {
     HomePage.open();
-    assert.equal(browser.compare('HomePage', {}), 0);
+    expect(browser.compare('HomePage', {})).toBe(0);
   });
   it('should pass for search results page', () => {
     HomePage.searchFor('dress');
     SearchResultsPage.productCountLabel.waitForDisplayed();
-    assert.equal(browser.compare('SearchResultsPage', {}), 0);
+    expect(browser.compare('SearchResultsPage', {})).toBe(0);
   });
 });

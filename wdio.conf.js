@@ -47,7 +47,7 @@ exports.config = {
       'image-comparison',
       {
         baselineFolder: join(process.cwd(), './baseline/web/'),
-        screenshotPath: join(process.cwd(), `${TEST_OUTPUT_DIR}/visual/`),
+        screenshotPath: `${TEST_OUTPUT_DIR}/visual/`,
         clearRuntimeFolder: true,
         returnAllCompareData: true,
         formatImageName: '{tag}-{logName}-{width}x{height}',
