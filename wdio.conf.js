@@ -41,7 +41,7 @@ exports.config = {
   waitforTimeout: 5000,
   connectionRetryTimeout: 9000,
   connectionRetryCount: 3,
-  services: [
+  services: ['devtools',
     [TimelineService],
     [
       'image-comparison',
@@ -85,7 +85,7 @@ exports.config = {
   // =====
   // Hooks
   // =====
-  beforeSession: function () {},
+  beforeSession: function () { },
   before: function () {
     require('./src/framework/customCommands');
   }

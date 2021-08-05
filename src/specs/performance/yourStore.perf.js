@@ -1,16 +1,14 @@
 import HomePage from '../../page/home.page';
 
-describe('Performance metrics should be below benchmark', () => {
-  beforeEach(() => {
-    browser.enablePerformanceAudits({
-      networkThrottling: 'online'
-    });
+describe('Performance score should be below benchmark', () => {
+  before(() => {
+    browser.enablePerformanceAudits();
   });
-  it.skip('for home page', () => {
+  it('for home page', () => {
     HomePage.open();
-    expect(browser.browser.getMetrics().speedIndex).to.be.below(0.99);
+    expect(browser.getPerformanceScore()).toBeLessThanOrEqual(0.99);
   });
-  afterEach(() => {
+  after(() => {
     browser.disablePerformanceAudits();
   });
 });
