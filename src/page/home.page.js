@@ -45,12 +45,6 @@ class HomePage extends HeaderPage {
     this.newsletterInput.setValue(emailAddress);
     this.submitNewsletterButton.click();
   }
-
-  newsLetterSubscriptionAlert () {
-    this.successAlertLabel.waitForDisplayed();
-    this.successAlertLabel.scrollIntoView();
-    return this.successAlertLabel.getText();
-  }
 }
 
 export default new HomePage();

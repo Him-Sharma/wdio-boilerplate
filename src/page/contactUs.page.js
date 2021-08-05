@@ -57,11 +57,6 @@ class ContactUsPage extends HeaderPage {
     this.submitButton.click();
     return this;
   }
-
-  successMessage () {
-    this.successMessageAlert.waitForDisplayed();
-    return this.successMessageAlert.getText();
-  }
 }
 
 export default new ContactUsPage();

@@ -1,7 +1,6 @@
 const { join } = require('path');
 const TEST_OUTPUT_DIR = `${process.cwd()}/test-output`;
 const REPORT_DIR = `${TEST_OUTPUT_DIR}/report`;
-const { removeSync } = require('fs-extra');
 
 const { TimelineService } = require('wdio-timeline-reporter/timeline-service');
 
@@ -30,16 +29,14 @@ exports.config = {
   // Capabilities
   // ============
   maxInstances: 1,
-  capabilities: [
-    {
-      maxInstances: 1,
-      browserName: 'chrome',
-      'goog:chromeOptions': {
-        args: ['window-size=1366,1024']
-      }
+  capabilities: [{
+    maxInstances: 1,
+    browserName: 'chrome',
+    'goog:chromeOptions': {
+      args: ['window-size=1366,1024']
     }
-  ],
-  logLevel: 'info',
+  }],
+  logLevel: 'debug',
   baseUrl: 'http://automationpractice.com/',
   waitforTimeout: 5000,
   connectionRetryTimeout: 9000,
@@ -60,13 +57,16 @@ exports.config = {
         blockOutStatusBar: true,
         blockOutToolBar: true
       }
-    ]
+    ], ['chromedriver', {
+      logFileName: 'wdio-chromedriver.log', // default
+      outputDir: TEST_OUTPUT_DIR, // overwrites the config.outputDir
+      args: ['--silent']
+    }]
   ],
   chromeDriverLogs: TEST_OUTPUT_DIR,
   framework: 'mocha',
   reporters: [
-    'spec',
-    [
+    'spec', [
       'timeline',
       {
         outputDir: REPORT_DIR,
@@ -85,13 +85,8 @@ exports.config = {
   // =====
   // Hooks
   // =====
-  onPrepare: function () {
-    removeSync(TEST_OUTPUT_DIR);
-  },
   beforeSession: function () {},
   before: function () {
-    const chai = require('chai');
-    global.expect = chai.expect;
     require('./src/framework/customCommands');
   }
 };
