@@ -2,7 +2,7 @@ To build:
 ``yarn install``
 
 To run test:
-``yarn test``
+``yarn test --suite=functional ``
 
 Expectations from visual regression suite
 
