@@ -9,38 +9,38 @@ const SELECTORS = {
   SUCCESS_ALERT_LABEL: '#columns > p'
 };
 class HomePage extends HeaderPage {
-  get searchInput () {
+  get searchInput() {
     return $(SELECTORS.SEARCH_INPUT);
   }
 
-  get searchButton () {
+  get searchButton() {
     return $(SELECTORS.SEARCH_BUTTON);
   }
 
-  get newsletterInput () {
+  get newsletterInput() {
     return $(SELECTORS.NEWSLETTER_INPUT);
   }
 
-  get submitNewsletterButton () {
+  get submitNewsletterButton() {
     return $(SELECTORS.SUBMIT_NEWSLETTER_BUTTON);
   }
 
-  get successAlertLabel () {
+  get successAlertLabel() {
     return $(SELECTORS.SUCCESS_ALERT_LABEL);
   }
 
-  open () {
+  open() {
     super.open();
     return this;
   }
 
-  searchFor (searchText) {
+  searchFor(searchText) {
     this.searchInput.setValue(searchText);
     this.searchButton.click();
     return SearchResultsPage;
   }
 
-  subscribeToNewsletter (emailAddress) {
+  subscribeToNewsletter(emailAddress) {
     this.newsletterInput.scrollIntoView();
     this.newsletterInput.setValue(emailAddress);
     this.submitNewsletterButton.click();

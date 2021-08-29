@@ -1,8 +1,24 @@
 const { join } = require('path');
 const TEST_OUTPUT_DIR = `${process.cwd()}/test-output`;
-const REPORT_DIR = `${TEST_OUTPUT_DIR}/report`;
-
-const { TimelineService } = require('wdio-timeline-reporter/timeline-service');
+const reportPortalService = require('wdio-reportportal-service');
+const reportportal = require('wdio-reportportal-reporter');
+const conf = {
+  reportPortalClientConfig: { // report portal settings
+    token: process.env.REPORT_PORTAL_TOKEN,
+    endpoint: 'http://localhost:8080/api/v1',
+    launch: 'spike',
+    project: 'wdio-playground',
+    mode: 'DEFAULT',
+    debug: false,
+    description: 'spike for wdio reportportal in',
+    attributes: [{ key: 'tag', value: 'spike' }]
+  },
+  reportSeleniumCommands: false, // add selenium commands to log
+  seleniumCommandsLogLevel: 'debug', // log level for selenium commands
+  autoAttachScreenshots: false, // automatically add screenshots
+  screenshotsLogLevel: 'info', // log level for screenshots
+  parseTagsFromTestTitle: false // parse strings like `@foo` from titles and add to Report Portal
+};
 
 exports.config = {
   //
@@ -42,7 +58,7 @@ exports.config = {
   connectionRetryTimeout: 9000,
   connectionRetryCount: 3,
   services: ['devtools',
-    [TimelineService],
+    [reportPortalService, {}],
     [
       'image-comparison',
       {
@@ -65,16 +81,7 @@ exports.config = {
   ],
   chromeDriverLogs: TEST_OUTPUT_DIR,
   framework: 'mocha',
-  reporters: [
-    'spec', [
-      'timeline',
-      {
-        outputDir: REPORT_DIR,
-        embedImages: true,
-        screenshotStrategy: 'before:click'
-      }
-    ]
-  ],
+  reporters: ['spec', [reportportal, conf]],
 
   mochaOpts: {
     ui: 'bdd',
